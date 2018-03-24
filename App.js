@@ -9,7 +9,8 @@ import {
   Platform,
   StyleSheet,
   Text,
-  View
+  View,
+  Image
 } from 'react-native';
 
 const instructions = Platform.select({
@@ -19,13 +20,52 @@ const instructions = Platform.select({
     'Shake or press menu button for dev menu',
 });
 
+class Greeting extends Component {
+  render() {
+    return (
+      <Text>Hello {this.props.name}!</Text>
+    );
+  }
+}
+
+class Blink extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {isShowingText: true};
+
+    // Toggle the state every second
+    setInterval(() => {
+      this.setState(previousState => {
+        return { isShowingText: !previousState.isShowingText };
+      });
+    }, 1000);
+  }
+
+  render() {
+    let display = this.state.isShowingText ? this.props.text : ' ';
+    return (
+      <Text>{display}</Text>
+    );
+  }
+}
+
 type Props = {};
 export default class App extends Component<Props> {
   render() {
+
+    let pic = {
+      uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
+    };
+
+
     return (
+
+
       <View style={styles.container}>
+        <Image source={pic} style={{width: 193, height: 110}}/>
+
         <Text style={styles.welcome}>
-          Welcome to React Native!
+          Welcome Maricris Roberto to React Native!
         </Text>
         <Text style={styles.instructions}>
           To get started, edit App.js
@@ -33,6 +73,23 @@ export default class App extends Component<Props> {
         <Text style={styles.instructions}>
           {instructions}
         </Text>
+
+        <Greeting name='Rexxar' />
+        <Greeting name='Jaina' />
+        <Greeting name='Valeera' />
+
+
+        <Blink text='I love to blink' />
+        <Blink text='Yes blinking is so great' />
+        <Blink text='Why did they ever take this out of HTML' />
+        <Blink text='Look at me look at me look at me' />
+
+
+        <Text style={styles1.red}>just red</Text>
+        <Text style={styles1.bigblue}>just bigblue</Text>
+        <Text style={[styles1.bigblue, styles.red]}>bigblue, then red</Text>
+        <Text style={[styles1.red, styles.bigblue]}>red, then bigblue</Text>
+
       </View>
     );
   }
@@ -54,5 +111,16 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#333333',
     marginBottom: 5,
+  },
+});
+
+const styles1 = StyleSheet.create({
+  bigblue: {
+    color: 'blue',
+    fontWeight: 'bold',
+    fontSize: 30,
+  },
+  red: {
+    color: 'red',
   },
 });
